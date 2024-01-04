@@ -21,6 +21,18 @@
     "type": "git",
     "url": "git://github.com/omarfkuri/dunes.git"
   },
+  "exports": {
+    ".": {
+      "main": "./lib/index.js",
+      "import": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./api": {
+      "main": "./lib/api/index.js",
+      "import": "./lib/api/index.js",
+      "types": "./lib/api/index.d.ts"
+    }
+  },
   "dependencies": {
     "@babel/core": "^7.23.2",
     "@babel/parser": "^7.23.0",

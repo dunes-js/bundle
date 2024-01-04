@@ -1,6 +1,6 @@
 import { existsSync } from "fs";
 import { dirname, join, resolve } from "path";
-import type { BundlerConfig } from "./types.js";
+import type { BundlerConfig } from "../types.js";
 
 
 export const localResolve: BundlerConfig["onParse"] = (bab, _, filename) => {
