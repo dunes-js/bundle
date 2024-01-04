@@ -72,7 +72,7 @@ export const includer: {
 
       if (withQuotes)
       {
-        content = '"' + content + '"';
+        content = '`' + content + '`';
       }
 
       return content;
