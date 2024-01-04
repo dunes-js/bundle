@@ -57,6 +57,7 @@ export class Bundler {
     const {onParse, onLoad, onResult} = config
     const entry = resolve(path);
     const build = await rollup({
+      ...(config.options || {}),
       input: "source",
       treeshake: config.treeshake,
       plugins: [
@@ -83,7 +84,7 @@ export class Bundler {
         },
         (nodeResolve as any as typeof nodeResolve.default)(config.resolve),
         (virtual as any as typeof virtual.default)({source})
-      ]
+      ],
     })
 
     return new Bundle(entry, build, config);

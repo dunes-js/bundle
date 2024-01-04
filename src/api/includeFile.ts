@@ -57,7 +57,7 @@ export const includer: {
   },
   onConclude: (code) => {
 
-    return code.replace(/include\(\) .+/, (str) => {
+    return code.replace(/include\(\)\s*\/\*[^*]+\*\//, (str) => {
 
       const match = str.match(/(?<=\/\*).+(?=\*\/)/)!;
 

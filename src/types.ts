@@ -1,6 +1,6 @@
 import type { Prom } from "@dunes/tools"
 import type { RollupNodeResolveOptions } from "@rollup/plugin-node-resolve"
-import type { OutputOptions, Plugin as RollupPlugin } from "rollup"
+import type { OutputOptions, Plugin as RollupPlugin, RollupOptions } from "rollup"
 import type { Bab, Babs } from "./Bundler.js"
 
 export interface BundlerConfig extends Load {
@@ -9,6 +9,8 @@ export interface BundlerConfig extends Load {
   resolve?: RollupNodeResolveOptions
   treeshake?: boolean
   output?: OutputOptions
+
+  options?: Omit<RollupOptions, "input" | "treeshake" | "plugins">
   
   /**
    * A list of plugins
