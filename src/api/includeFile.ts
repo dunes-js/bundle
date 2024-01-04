@@ -5,7 +5,6 @@ import { addComment } from "@babel/types";
 export const includer: {
   onParse: BundlerConfig["onParse"]
   onConclude: BundlerConfig["onConclude"]
-
 } = {
   onParse: (bab, _) => 
   {
@@ -22,7 +21,7 @@ export const includer: {
             console.error("Include directive does not contain parameters");
             return;
           }
-          if (path.node.arguments.length > 1)
+          if (path.node.arguments.length > 2)
           {
             console.error("Include directive contains too many parameters");
             return;
@@ -39,9 +38,19 @@ export const includer: {
             console.error("Could not find file", file_path.value);
             return;
           }
+          let withQuotes = false;
+          if (path.node.arguments.length === 2)
+          {
+            if (path.node.arguments[1]!.type !== "BooleanLiteral")
+            {
+              console.error("Include directive parameter 2 is not of type boolean");
+              return;
+            }
+            withQuotes = path.node.arguments[1].value;
+          }
 
           path.node.arguments = [];
-          addComment(path.node, "trailing", file_path.value);
+          addComment(path.node, "trailing", `${file_path.value}%%%${withQuotes}`);
         }
       }
     })
@@ -50,14 +59,28 @@ export const includer: {
 
     return code.replace(/include\(\) .+/, (str) => {
 
-      const path = str.match(/(?<=\/\*).+(?=\*\/)/)!;
+      const match = str.match(/(?<=\/\*).+(?=\*\/)/)!;
 
-      return readFileSync(path[0]!).toString();
+      const [path, withQuotes] = match[0]?.split("%%%") || [];
+
+      if (!path)
+      {
+        throw "Could not parse " + match[0];
+      }
+
+      let content = readFileSync(path).toString();
+
+      if (withQuotes)
+      {
+        content = '"' + content + '"';
+      }
+
+      return content;
     });
   }
 }
 
-export function include<T>(_path: string): T
+export function include<T>(_path: string, _useQuotes = false): T
 {
   return {} as T;
 };
