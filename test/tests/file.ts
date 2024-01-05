@@ -1,11 +1,9 @@
 
 
 import { Bundler } from "../../src/index.js"
-import { includer } from "../../src/api/index.js"
+import { fileIncluder } from "../../src/api/index.js"
 
-
-
-const bundler = new Bundler(includer);
+const bundler = new Bundler(fileIncluder);
 
 const bundle = await bundler.bundleScript(`
 
