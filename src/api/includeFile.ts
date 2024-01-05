@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "fs";
 import type { BundlerConfig } from "../types.js";
 import { addComment } from "@babel/types";
 
-export const includer: {
+export const fileIncluder: {
   onParse: BundlerConfig["onParse"]
   onConclude: BundlerConfig["onConclude"]
 } = {
@@ -13,7 +13,7 @@ export const includer: {
       {
         if (
           path.node.callee.type === "Identifier" &&
-          path.node.callee.name === "include"
+          path.node.callee.name === "includeFile"
         )
         {
           if (path.node.arguments.length === 0)
@@ -79,8 +79,3 @@ export const includer: {
     });
   }
 }
-
-export function include<T>(_path: string, _useQuotes = false): T
-{
-  return {} as T;
-};
