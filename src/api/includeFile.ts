@@ -57,7 +57,7 @@ export const fileIncluder: {
   },
   onConclude: (code) => {
 
-    return code.replace(/include\(\)\s*\/\*[^*]+\*\//g, (str) => {
+    return code.replace(/includeFile\s*\(\)\s*\/\*[^*]+\*\//g, (str) => {
 
       const match = str.match(/(?<=\/\*).+(?=\*\/)/)!;
 
