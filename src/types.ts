@@ -43,12 +43,12 @@ interface Load {
   /**
    * Runs after every parse
    * */
-  onParse?(bab: Bab, babs: Babs, filename: string): Prom<void>
+  onParse?(bab: Bab, filename: string, source: string): Prom<void>
 
   /**
    * Runs after transform concludes
    * */
-  onResult?(code: string, filename: string): Prom<CodeTrfResult>
+  onResult?(code: string, filename: string, source: string): Prom<CodeTrfResult>
   
 
   /**

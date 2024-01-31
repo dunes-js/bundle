@@ -2,7 +2,7 @@
 import type { BundlerConfig } from "../types.js";
 import { stringLiteral } from "@babel/types";
 
-export const stringIncluder: Required<BundlerConfig>["onParse"] = (bab, babs) => 
+export const stringIncluder: Required<BundlerConfig>["onParse"] = (bab) => 
 {
   bab.traverse({
     CallExpression(path)
@@ -43,7 +43,7 @@ export const stringIncluder: Required<BundlerConfig>["onParse"] = (bab, babs) =>
 
         path.replaceWith(stringLiteral(
           useParse
-          ? babs.parse(value).code({})
+          ? bab.babs.parse(value).code({})
           : value
         ));
       }

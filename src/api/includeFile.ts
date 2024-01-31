@@ -6,7 +6,7 @@ export const fileIncluder: {
   onParse: Required<BundlerConfig>["onParse"]
   onConclude: Required<BundlerConfig>["onConclude"]
 } = {
-  onParse: (bab, _) => 
+  onParse: (bab) => 
   {
     bab.traverse({
       CallExpression(path)

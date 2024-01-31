@@ -73,9 +73,9 @@ export class Bundler {
               if (prepared.stop) return source;
             }
             const bab = babs.parse(source);
-            await onParse?.(bab, babs, filename);
+            await onParse?.(bab, filename, source);
             const code = bab.code({ filename });
-            const concluded = await onResult?.(code, filename);
+            const concluded = await onResult?.(code, filename, source);
             if (concluded && concluded.text) {
               source = concluded.text;
               if (concluded.stop) return source;
