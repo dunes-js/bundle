@@ -3,8 +3,8 @@ import type { BundlerConfig } from "../types.js";
 import { addComment } from "@babel/types";
 
 export const fileIncluder: {
-  onParse: BundlerConfig["onParse"]
-  onConclude: BundlerConfig["onConclude"]
+  onParse: Required<BundlerConfig>["onParse"]
+  onConclude: Required<BundlerConfig>["onConclude"]
 } = {
   onParse: (bab, _) => 
   {

@@ -3,7 +3,7 @@ import { dirname, join, resolve } from "path";
 import type { BundlerConfig } from "../types.js";
 
 
-export const localResolve: BundlerConfig["onParse"] = (bab, _, filename) => {
+export const localResolve: Required<BundlerConfig>["onParse"] = (bab, _, filename) => {
   const extensions = ["ts", "tsx", "js", "jsx"];
 
   function makeFile(pastDir: string, src: string): string {

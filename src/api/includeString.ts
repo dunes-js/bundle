@@ -2,7 +2,7 @@
 import type { BundlerConfig } from "../types.js";
 import { stringLiteral } from "@babel/types";
 
-export const stringIncluder: BundlerConfig["onParse"] = (bab, babs) => 
+export const stringIncluder: Required<BundlerConfig>["onParse"] = (bab, babs) => 
 {
   bab.traverse({
     CallExpression(path)
