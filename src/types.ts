@@ -1,7 +1,8 @@
 import type { Prom } from "@dunes/tools"
 import type { RollupNodeResolveOptions } from "@rollup/plugin-node-resolve"
 import type { OutputOptions, Plugin as RollupPlugin, RollupOptions } from "rollup"
-import type { Bab, Babs } from "./Bundler.js"
+import type { Bab } from "./class/Bab.js"
+import type { Babs } from "./class/Babs.js"
 
 export interface BundlerConfig extends Load {
   jsx?: JSXOptions | false

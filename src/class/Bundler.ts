@@ -1,12 +1,13 @@
-import { readString, writeStr } from "@dunes/sys";
-import type { BundlerConfig } from "./types.js";
-import { rollup, type RollupBuild } from "rollup";
+import { readString } from "@dunes/sys";
+import type { BundlerConfig } from "../types.js";
+import { rollup } from "rollup";
 import parser from "@babel/parser";
-import { transformFromAstSync, type TransformOptions, traverse } from "@babel/core";
+import { type TransformOptions } from "@babel/core";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import virtual from "@rollup/plugin-virtual";
 import { resolve } from "path";
-import type { File } from "@babel/types";
+import { Bundle } from "./Bundle.js";
+import { Babs } from "./Babs.js";
 
 
 export class Bundler {
@@ -94,73 +95,4 @@ export class Bundler {
 
 
 
-export class Bundle {
-  #build: RollupBuild
-  #config: BundlerConfig
 
-  constructor(readonly entry: string, build: RollupBuild, config: BundlerConfig) {
-    this.#build = build;
-    this.#config = config;
-  }
-
-  get watchFiles() {
-    return this.#build.watchFiles;
-  }
-
-  async code(): Promise<string> {
-    const {output} = await this.#build.generate(
-      this.#config.output || {}
-    );
-    let code = "";
-    for (const chunk of output) {
-      if (chunk.type === "chunk") {
-        code += chunk.code + "\n";
-      }
-    }
-    const finish = await this.#config.onConclude?.(code, this.entry);
-    return finish || code;
-  }
-
-  async write(to: string): Promise<void> {
-    await writeStr(to, await this.code());
-  }
-
-  async evaluate(): Promise<unknown> {
-    return eval(await this.code());
-  }
-}
-
-
-export class Babs {
-  constructor(
-    public parseOptions: parser.ParserOptions,
-    public transformOptions: TransformOptions,
-  ) {}
-
-  parse(script: string, opts?: parser.ParserOptions): Bab {
-    const ast = parser.parse(script, {
-      ...this.parseOptions,
-      ...opts
-    });
-    return new Bab(ast, this);
-  }
-}
-
-export class Bab {
-  constructor(
-    public ast: parser.ParseResult<File>, 
-    public babs: Babs
-  ) {}
-
-  code(options: TransformOptions): string {
-    const r = transformFromAstSync(this.ast, undefined, {
-      ...this.babs.transformOptions,
-      ...options,
-    });
-    return r?.code || "";
-  }
-
-  traverse(options: import("@babel/traverse").TraverseOptions) {
-    traverse(this.ast, options);
-  }
-}
