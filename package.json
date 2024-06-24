@@ -7,7 +7,7 @@
   "types": "./lib/index.d.ts",
   "scripts": {
     "build": "rm -rf lib && tsc && npm version patch",
-    "test": "ts-node test/index"
+    "test": "tsx test/index"
   },
   "keywords": [
     "javascript",
@@ -19,7 +19,7 @@
   "author": "Omar <omarfkuri@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/dunests/bundle.git"
+    "url": "git://github.com/dunes-js/bundle.git"
   },
   "exports": {
     ".": {
@@ -47,5 +47,8 @@
     "@types/node": "^20.8.6",
     "rollup": "^3.29.4",
     "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.15.7"
   }
 }
