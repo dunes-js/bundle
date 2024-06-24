@@ -84,7 +84,10 @@ export class Bundler {
           }
         },
         (nodeResolve as any as typeof nodeResolve.default)(config.resolve),
-        (virtual as any as typeof virtual.default)({source})
+        (virtual as any as typeof virtual.default)({
+          source,
+          path
+        })
       ],
     })
 
